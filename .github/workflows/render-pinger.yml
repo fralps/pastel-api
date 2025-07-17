@@ -1,0 +1,15 @@
+name: Ping fucking Render dynos
+on:
+  push:
+    branches:
+      - 'staging'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Ping
+        shell: bash
+        run: |
+          curl -X GET https://staging-pastel-api.onrender.com/api/v1/pings -H "Origin: https://staging-pastel-front.vercel.app" -H "Accept: application/json" -H "Referrer: https://staging-pastel-front.vercel.app" -H "User-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" 

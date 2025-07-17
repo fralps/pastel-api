@@ -1,0 +1,2 @@
+api: kill -9 $(lsof -i :3000 -t); rails s -u puma -p 3000 -b 0.0.0.0
+front: kill -9 $(lsof -i :8080 -t); [ -d "../pastel-front" ] && cd ../pastel-front && bun run dev

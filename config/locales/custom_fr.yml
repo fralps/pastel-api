@@ -1,0 +1,15 @@
+fr:
+  error:
+    encoding_problem: >
+      Problème d'encodage du fichier csv. 
+      Encodage en utf-8 requis.
+  mailer:
+    default_text:
+      hello: Bonjour
+      subject: Sujet
+      visitor: visiteur
+    contact:
+      visitor_subject: Demande d'un visiteur
+      intro: Vous venez de recevoir un message de la part de %{fullname}.
+      outro: Vous pouvez lui répondre à cette adresse email
+      mailto_subject: Réponse à votre demande

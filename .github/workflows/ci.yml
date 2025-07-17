@@ -1,0 +1,108 @@
+name: CI
+on:
+  push:
+    branches:
+      - '**' # matches every branch
+      - '!main'
+  pull_request:
+    branches:
+      - 'staging'
+    types: [opened]
+
+jobs:
+  testing:
+    name: 🧪 Testing
+    runs-on: ubuntu-latest
+
+    # Postgres service
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: $POSTGRES_USER
+          POSTGRES_DB: pastel_api_test
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+        ports: ["5432:5432"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: 🔧 Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      # Run bundle install
+      - name: 📦 Install dependencies
+        run: |
+          sudo apt-get -yqq install libpq-dev build-essential
+          bundle install
+
+      # Create and migrate DB
+      - name: ⚙️ Setup test database
+        env:
+          PGHOST: localhost
+          POSTGRES_DB: pastel_api_test
+          POSTGRES_USER: $POSTGRES_USER
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+          RAILS_ENV: test
+          STAGING_ENV: 'false'
+        run: |
+          bundle exec rails db:create db:migrate
+
+      # Run rspec command
+      - name: 🧪 Run tests
+        env:
+          CONTACT_EMAIL: $CONTACT_EMAIL
+          WEB_BASE_URL: ${{ secrets.WEB_BASE_URL }}
+          DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
+          DEVISE_JWT_EXPIRATION_TIME: ${{ secrets.DEVISE_JWT_EXPIRATION_TIME }}
+          PGHOST: localhost
+          POSTGRES_DB: pastel_api_test
+          POSTGRES_USER: $POSTGRES_USER
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+          PGPORT: ${{ job.services.postgres.ports[5432] }}
+          RAILS_ENV: test
+          STAGING_ENV: 'false'
+        run: bundle exec rspec --profile -f j -o tmp/rspec_results.json -f p
+
+  security:
+    name: 🔒 Security
+    if: success()
+    needs: testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: 🔧 Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      # Run Brakeman analyser
+      - name: 👹 Security checks 
+        uses: reviewdog/action-brakeman@v2
+        with:
+          brakeman_version: gemfile
+          fail_on_error: true
+
+  analytics:
+    name: 🔬 Analytics
+    if: success()
+    needs: testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: 🔧 Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      # Run Rubocop analyser
+      - name: 🔮 Analytics
+        uses: reviewdog/action-rubocop@v2
+        with:
+          rubocop_version: gemfile
+          rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile rubocop-performance:gemfile rubocop-factory_bot:gemfile
+          use_bundler: true
+          fail_on_error: true

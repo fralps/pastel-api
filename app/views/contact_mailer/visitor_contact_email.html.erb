@@ -1,0 +1,15 @@
+<h1><%= I18n.t("mailer.default_text.hello")%></h1>
+  <br>
+<p>
+  <%= I18n.t('mailer.contact.intro', fullname: @fullname) %>
+</p>
+  <br>
+<div style="color: black; margin-left: 35px">
+  <p><strong><%= I18n.t("mailer.default_text.subject")%>: <%= @subject %></strong></p>
+  <%= simple_format(@message) %>
+</div>
+  <br>
+<p>
+  <%= I18n.t('mailer.contact.outro')%> :
+  <a href="mailto:<%= @email %>?subject=<%= I18n.t('mailer.contact.mailto_subject') %>"><%= @email %></a>
+</p>

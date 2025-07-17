@@ -1,0 +1,10 @@
+#!/bin/bash
+
+(cd "$(pwd)/../pastel-api" \
+  && bundle install \
+  && bundle exec rails db:migrate
+)
+
+([ -d "$(pwd)/../pastel-front" ] && cd "$(pwd)/../pastel-front" && bun install)
+
+foreman start -f Procfile.dev-server

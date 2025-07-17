@@ -1,0 +1,12 @@
+<p>Hello <%= @email %>!</p>
+
+<p><%= t("devise.mailer.confirmation_instructions.instruction_1") %></p>
+
+<p style="text-align: center; margin: 40px 0px;">
+  <%= link_to \
+      t("devise.mailer.confirmation_instructions.action"),
+      front_url("confirmation-email?confirmation_token=#{@token}"),
+      class: "button",
+      target: "_blank"
+    %>
+</p>

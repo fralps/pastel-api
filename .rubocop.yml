@@ -1,0 +1,90 @@
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
+  - rubocop-performance
+  - rubocop-factory_bot
+
+Rails:
+  Enabled: true
+
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'config/routes.rb'
+    - 'tmp/**/*'
+    - 'public/**/*'
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'spec/integration/**/*'
+  NewCops: enable
+
+FactoryBot/ExcessiveCreateList:
+  MaxAmount: 30
+
+Metrics/AbcSize:
+  Max: 50
+
+# For specs
+Metrics/BlockLength:
+  Max: 25
+  Exclude:
+    - 'spec/**/*'
+    - 'app/admin/**/*'
+
+# The guiding principle of classes is SRP, SRP can't be accurately measured by LoC
+Metrics/ClassLength:
+  Max: 1500
+
+# The guiding principle of classes is SRP, SRP can't be accurately measured by LoC
+Metrics/CyclomaticComplexity:
+  Max: 11
+
+# Too short methods lead to extraction of single-use methods, which can make
+# the code easier to read (by naming things), but can also clutter the class
+Metrics/MethodLength:
+  Max: 30
+  Exclude:
+    - '**/migrate/*'
+
+# Commonly used screens these days easily fit more than 80 characters.
+Layout/LineLength:
+  Max: 130
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+  EnforcedStyle: line_count_based
+  FunctionalMethods:
+    - before
+    - let
+    - let!
+    - subject
+    - watch
+    - expect
+
+Style/NumericLiterals:
+  MinDigits: 6
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/WordArray:
+  EnforcedStyle: brackets
+
+Style/Documentation:
+  Exclude:
+    - '**/migrate/*'
+
+Style/HashTransformValues:
+  Enabled: false
+Style/HashTransformKeys:
+  Enabled: false
+Style/HashEachMethods:
+  Enabled: false
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - 'app/controllers/**/**/*'
