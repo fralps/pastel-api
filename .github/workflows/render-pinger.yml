@@ -2,7 +2,7 @@ name: Ping fucking Render dynos
 on:
   push:
     branches:
-      - 'staging'
+      - 'main'
 
 jobs:
   build:
