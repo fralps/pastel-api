@@ -89,7 +89,7 @@ jobs:
         uses: reviewdog/action-brakeman@v2
         with:
           brakeman_version: gemfile
-          fail_on_error: true
+          fail_level: true
 
   analytics:
     name: 🔬 Analytics
@@ -111,4 +111,4 @@ jobs:
           rubocop_version: gemfile
           rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile rubocop-performance:gemfile rubocop-factory_bot:gemfile
           use_bundler: true
-          fail_on_error: true
+          fail_level: true
