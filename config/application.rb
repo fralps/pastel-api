@@ -24,7 +24,7 @@ module Api
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
+    # -- all .rb files in directory are automatically loaded after loading
     # the framework and any gems in your application.
 
     # Only loads a smaller set of middleware suitable for API only apps.
@@ -34,9 +34,16 @@ module Api
 
     # Encrypt some database fields
     # See: https://guides.rubyonrails.org/active_record_encryption.html
-    config.active_record.encryption.primary_key = ENV.fetch('ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY')
-    config.active_record.encryption.deterministic_key = ENV.fetch('ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY')
-    config.active_record.encryption.key_derivation_salt = ENV.fetch('ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT')
+    # Use default test keys for test environment to avoid ENV.fetch errors
+    if Rails.env.test?
+      config.active_record.encryption.primary_key = 'test_primary_key_for_testing_only'
+      config.active_record.encryption.deterministic_key = 'test_deterministic_key_for_testing_only'
+      config.active_record.encryption.key_derivation_salt = 'test_salt_for_testing_only'
+    else
+      config.active_record.encryption.primary_key = ENV.fetch('ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY')
+      config.active_record.encryption.deterministic_key = ENV.fetch('ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY')
+      config.active_record.encryption.key_derivation_salt = ENV.fetch('ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT')
+    end
 
     # Use cookies storage
     config.middleware.use ActionDispatch::Cookies
