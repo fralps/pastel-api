@@ -52,6 +52,9 @@ Rails.application.configure do
   # See: https://guides.rubyonrails.org/active_record_encryption.html
   config.active_record.encryption.encrypt_fixtures = true
 
+  # Ensure API mode is enabled in test environment
+  config.api_only = true
+
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 end
