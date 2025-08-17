@@ -39,6 +39,12 @@ module Api
       config.active_record.encryption.primary_key = 'test_primary_key_for_testing_only'
       config.active_record.encryption.deterministic_key = 'test_deterministic_key_for_testing_only'
       config.active_record.encryption.key_derivation_salt = 'test_salt_for_testing_only'
+
+      # Set test environment variables for Devise JWT
+      ENV['DEVISE_JWT_SECRET_KEY'] = 'test_jwt_secret_key_for_testing_only'
+      ENV['DEVISE_JWT_EXPIRATION_TIME'] = '86400' # 24 hours in seconds
+      ENV['CONTACT_EMAIL'] = 'test@example.com'
+      ENV['WEB_BASE_URL'] = 'http://localhost:3000'
     else
       config.active_record.encryption.primary_key = ENV.fetch('ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY')
       config.active_record.encryption.deterministic_key = ENV.fetch('ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY')
