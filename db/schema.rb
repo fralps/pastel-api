@@ -30,9 +30,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_17_075255) do
     t.string "intensity"
     t.string "happened"
     t.string "sleep_type", default: "dream", null: false
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_sleeps_on_user_id"
   end
 

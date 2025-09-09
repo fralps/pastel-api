@@ -30,7 +30,7 @@ class Sleep < ApplicationRecord
   }.freeze
 
   belongs_to :user
-  has_many :tags, -> { order('id ASC') }, dependent: :destroy, inverse_of: :sleep
+  has_many :tags, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :sleep
 
   accepts_nested_attributes_for :tags, allow_destroy: true
 
