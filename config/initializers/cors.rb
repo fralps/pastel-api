@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 FRONT_ORIGINS = [
-  'http://localhost:8080',
-  'https://staging-pastel-front.vercel.app'
+  'http://localhost:5100',
+  'https://pastel-front.vercel.app/fr'
 ].freeze
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
