@@ -61,6 +61,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_17_075255) do
     t.string "unconfirmed_email"
     t.string "firstname"
     t.string "lastname"
+    t.string "registration_locale", default: "en", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role", default: "user"

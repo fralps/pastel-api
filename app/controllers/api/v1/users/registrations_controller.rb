@@ -32,7 +32,8 @@ module Api
           [
             :email,
             :firstname,
-            :lastname
+            :lastname,
+            :registration_locale
           ]
         end
 
@@ -41,7 +42,8 @@ module Api
             :firstname,
             :lastname,
             :password,
-            :password_confirmation
+            :password_confirmation,
+            :registration_locale
           ]
         end
       end

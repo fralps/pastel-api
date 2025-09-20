@@ -36,6 +36,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[8.0]
       t.string :firstname
       t.string :lastname
       t.string :role, default: 'user'
+      t.string :registration_locale, default: 'en'
 
       t.timestamps null: false
     end

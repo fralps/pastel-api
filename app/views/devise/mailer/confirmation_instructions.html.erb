@@ -5,7 +5,7 @@
 <p style="text-align: center; margin: 40px 0px;">
   <%= link_to \
       t("devise.mailer.confirmation_instructions.action"),
-      front_url("confirmation-email?confirmation_token=#{@token}"),
+      front_url("#{@resource.registration_locale.to_s}/auth/email-confirmation?confirmation_token=#{@token}"),
       class: "button",
       target: "_blank"
     %>

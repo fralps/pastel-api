@@ -27,7 +27,7 @@
 - Install dependencies: `bundle install`
 - Run `reset-db` bash script to install DB, migrations and seed: `./scripts/reset-db`
 - Run `dev` bash script to run both api and front-end server: `./script/dev`
-- Go to `http://localhost:8080`
+- Go to `http://localhost:5100`
 
 ## Testing
 
