@@ -2,6 +2,7 @@
 
 FRONT_ORIGINS = [
   'http://localhost:5100',
+  'http://localhost:3000',
   'https://pastel-front.vercel.app/fr'
 ].freeze
 
