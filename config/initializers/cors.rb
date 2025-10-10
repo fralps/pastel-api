@@ -3,7 +3,7 @@
 FRONT_ORIGINS = [
   'http://localhost:5100',
   'http://localhost:3000',
-  'https://pastel-front.vercel.app/fr'
+  'https://pastel-front.vercel.app'
 ].freeze
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
