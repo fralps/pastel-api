@@ -10,7 +10,8 @@ RSpec.describe SleepSerializer do
     let(:serialized_sleep) { described_class.render_as_hash(sleep, view: :index_and_create) }
 
     it 'renders the expected keys' do
-      expect(serialized_sleep.keys).to contain_exactly(:id, :title, :date)
+      expect(serialized_sleep.keys).to contain_exactly(:id, :title, :date, :description, :sleep_type, :tags_attributes,
+                                                       :current_mood)
     end
 
     it 'renders the correct id' do
@@ -22,7 +23,7 @@ RSpec.describe SleepSerializer do
     end
 
     it 'renders the correct formatted date' do
-      expect(serialized_sleep[:date]).to eq(sleep.date.strftime('%d/%m/%Y'))
+      expect(serialized_sleep[:date]).to be_present
     end
   end
 

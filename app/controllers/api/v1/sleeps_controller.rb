@@ -19,7 +19,8 @@ module Api
 
         render json: {
           total_pages: pagy_metadata(@pagy),
-          paginated_result: SleepSerializer.render(user_sleeps, view: :index_and_create),
+          total_sleeps: sleeps.size,
+          paginated_result: SleepSerializer.render_as_hash(user_sleeps.includes(:tags), view: :index_and_create),
           status: :ok
         }
       end

@@ -2,7 +2,7 @@
 
 # Sleep model
 class Sleep < ApplicationRecord
-  ITEMS_PER_PAGE = 8
+  ITEMS_PER_PAGE = 10
 
   INTENSITY = {
     very_clear: 'very_clear',

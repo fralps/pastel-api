@@ -5,11 +5,9 @@ class SleepSerializer < Blueprinter::Base
   identifier :id
 
   view :index_and_create do
-    fields :title
+    fields :current_mood, :date, :description, :sleep_type, :title
 
-    field :date do |sleep|
-      sleep.date.strftime('%d/%m/%Y')
-    end
+    association :tags, name: :tags_attributes, blueprint: TagSerializer
   end
 
   view :update_and_show do

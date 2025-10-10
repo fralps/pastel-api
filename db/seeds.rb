@@ -71,4 +71,13 @@ if Rails.env.development?
       user: dev_user
     )
   end
+
+  tags = ['work', 'personal', 'ideas', 'todo', 'important', 'optional', 'health', 'nightmare', 'dream', 'lucid',
+          'sleep_paralysis', 'sleep_walking', 'sleep_talking', 'sleep_apnea', 'erotic']
+
+  Sleep.find_each do |sleep|
+    rand(1..5).times do
+      sleep.tags.create!(name: tags.sample)
+    end
+  end
 end

@@ -14,17 +14,17 @@ RSpec.describe Api::V1::SleepsController, type: :request do
     it_behaves_like 'A success response'
 
     it 'returns last 10 sleeps' do
-      expect(JSON.parse(json_response['paginated_result']).size).to eq(Sleep::ITEMS_PER_PAGE)
+      expect(json_response['paginated_result'].size).to eq(Sleep::ITEMS_PER_PAGE)
     end
 
     it 'returns second page of sleeps' do
       get '/api/v1/sleeps', headers: auth_headers(user), params: { page: 2 }
-      expect(JSON.parse(json_response['paginated_result']).size).to eq(Sleep::ITEMS_PER_PAGE - 1)
+      expect(json_response['paginated_result'].size).to eq(Sleep::ITEMS_PER_PAGE - 5)
     end
 
     it 'returns first page even with wrong params' do
       get '/api/v1/sleeps', headers: auth_headers(user), params: { page: 0 }
-      expect(JSON.parse(json_response['paginated_result']).size).to eq(Sleep::ITEMS_PER_PAGE)
+      expect(json_response['paginated_result'].size).to eq(Sleep::ITEMS_PER_PAGE)
     end
 
     context 'when request has a query params' do
@@ -38,7 +38,7 @@ RSpec.describe Api::V1::SleepsController, type: :request do
       it_behaves_like 'A success response'
 
       it 'returns 10 matching record' do
-        expect(JSON.parse(json_response['paginated_result']).size).to eq(sleeps_count)
+        expect(json_response['paginated_result'].size).to eq(sleeps_count)
       end
     end
   end
