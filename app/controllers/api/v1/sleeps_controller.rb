@@ -30,7 +30,12 @@ module Api
       end
 
       def create
-        sleep = Sleep.new(sleep_params.merge(user: current_user))
+        date_hash = params[:sleep][:date]
+
+        timestamp = Time.zone.local(date_hash['year'], date_hash['month'], date_hash['day'])
+
+        sleep = Sleep.new(sleep_params.merge(user: current_user, date: timestamp))
+
         if sleep.save
           render json: SleepSerializer.render(sleep, view: :index_and_create), status: :created
         else
@@ -71,6 +76,7 @@ module Api
                         :current_mood,
                         :title,
                         :updated_at,
+                        :sleep_type,
                         :happened,
                         { tags_attributes: [tags_attributes] }
                       ])

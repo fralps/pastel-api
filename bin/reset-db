@@ -1,5 +1,5 @@
 #!/bin/sh
 set -e
 
-bundle install
+MAKE="make --jobs $(nproc)" bundle install
 bundle exec rails db:drop && rails db:create && rails db:migrate && rails db:seed

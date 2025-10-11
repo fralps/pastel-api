@@ -76,7 +76,15 @@ RSpec.describe Api::V1::SleepsController, type: :request do
     let(:params) do
       {
         title: 'Great dream',
-        date: Time.zone.today,
+        date: {
+          calendar: {
+            identifier: 'gregory'
+          },
+          era: 'AD',
+          year: 2025,
+          month: 9,
+          day: 30
+        },
         description: 'Great description of my last night dream',
         current_mood: 'Good mood',
         intensity: Sleep::INTENSITY[Sleep::INTENSITY.keys.sample],
