@@ -15,7 +15,7 @@ gem 'pagy'
 gem 'pg'
 
 # Use Puma as the app server
-gem 'puma', '~> 7.0'
+gem 'puma', '~> 7.1'
 
 # JSON serialization
 gem 'blueprinter'
