@@ -259,7 +259,7 @@ GEM
       date
       stringio
     public_suffix (6.0.2)
-    puma (7.0.4)
+    puma (7.1.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.3)
@@ -383,7 +383,7 @@ GEM
     ruby_parser (3.21.1)
       racc (~> 1.5)
       sexp_processor (~> 4.16)
-    rubycritic (4.10.0)
+    rubycritic (4.11.0)
       flay (~> 2.13)
       flog (~> 4.7)
       launchy (>= 2.5.2)
@@ -461,7 +461,7 @@ DEPENDENCIES
   oj
   pagy
   pg
-  puma (~> 7.0)
+  puma (~> 7.1)
   rack-cors
   rails (~> 8.0.3)
   rspec-json_expectations
