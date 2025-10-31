@@ -4,6 +4,17 @@
 class User < ApplicationRecord
   ITEMS_PER_PAGE = 15
 
+  SLEEP_TYPE_METHODS = {
+    dreams: :dream,
+    nightmares: :nightmare,
+    lucids: :lucid,
+    paralyses: :sleep_paralysis,
+    walkings: :sleep_walking,
+    talkings: :sleep_talking,
+    apneas: :sleep_apnea,
+    erotics: :erotic
+  }.freeze
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :confirmable, :database_authenticatable, :registerable,
@@ -28,5 +39,11 @@ class User < ApplicationRecord
   def to_json(_arg)
     # Tell Devise to use our custom user serializer
     UserSerializer.render(self)
+  end
+
+  SLEEP_TYPE_METHODS.each do |method_name, sleep_type_key|
+    define_method(method_name) do
+      sleeps.where(sleep_type: Sleep::SLEEP_TYPE[sleep_type_key])
+    end
   end
 end

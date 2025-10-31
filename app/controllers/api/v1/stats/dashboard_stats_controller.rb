@@ -23,20 +23,25 @@ module Api
         def json_response
           {
             totals: {
-              dreams: current_user.dreams.size,
-              lucids: current_user.lucids.size,
-              nightmares: current_user.nightmares.size
-            },
-            by_month: {
-              dreams: build_months_records(current_user.dreams),
-              lucids: build_months_records(current_user.lucids),
-              nightmares: build_months_records(current_user.nightmares)
-            },
-            by_year: {
-              dreams: build_years(current_user.dreams),
-              lucids: build_years(current_user.lucids),
-              nightmares: build_years(current_user.nightmares)
+              dream: current_user.dreams.size,
+              lucid: current_user.lucids.size,
+              nightmare: current_user.nightmares.size,
+              sleep_paralysis: current_user.paralyses.size,
+              sleep_walking: current_user.walkings.size,
+              sleep_talking: current_user.talkings.size,
+              sleep_apnea: current_user.apneas.size,
+              erotic: current_user.erotics.size
             }
+            # by_month: {
+            #   dreams: build_months_records(current_user.dreams),
+            #   lucids: build_months_records(current_user.lucids),
+            #   nightmares: build_months_records(current_user.nightmares)
+            # },
+            # by_year: {
+            #   dreams: build_years(current_user.dreams),
+            #   lucids: build_years(current_user.lucids),
+            #   nightmares: build_years(current_user.nightmares)
+            # }
           }
         end
 

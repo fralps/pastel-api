@@ -72,6 +72,7 @@ end
 
 group :test do
   gem 'database_cleaner-active_record'
+  gem 'db-query-matchers'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
 end

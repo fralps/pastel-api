@@ -29,6 +29,7 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Max: 25
   Exclude:
+    - '**/initializers/rails_pulse.rb'
     - 'spec/**/*'
     - 'app/admin/**/*'
 
@@ -88,3 +89,7 @@ Style/HashEachMethods:
 Rails/LexicallyScopedActionFilter:
   Exclude:
     - 'app/controllers/**/**/*'
+
+RSpec/InstanceVariable:
+  Exclude:
+    - 'spec/models/user_spec.rb'
