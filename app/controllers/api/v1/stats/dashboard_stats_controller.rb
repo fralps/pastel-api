@@ -6,18 +6,10 @@ module Api
       # Dashboard stats controller
       class DashboardStatsController < ApiController
         def index
-          return render json: { status: :ok } if no_record?
-
           render json: json_response, status: :ok
         end
 
         private
-
-        def no_record?
-          return true if current_user.dreams.empty? && current_user.nightmares.empty? && current_user.lucids.empty?
-
-          false
-        end
 
         # Final json response for statistics
         def json_response
