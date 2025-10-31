@@ -124,13 +124,22 @@ RSpec.describe Api::V1::SleepsController, type: :request do
     end
   end
 
-  describe '#PATCH /api/v1/sleeps/:id' do
-    subject(:request) { patch "/api/v1/sleeps/#{sleep.id}", headers: auth_headers(user), params: { sleep: params } }
+  describe '#PUT /api/v1/sleeps/:id' do
+    subject(:request) { put "/api/v1/sleeps/#{sleep.id}", headers: auth_headers(user), params: { sleep: params } }
 
     let(:user) { create(:user) }
     let(:sleep) { create(:sleep, user:) }
     let(:params) do
       {
+        date: {
+          calendar: {
+            identifier: 'gregory'
+          },
+          era: 'AD',
+          year: 2025,
+          month: 9,
+          day: 30
+        },
         tags_attributes: [
           { name: 'first tag' },
           { name: 'second tag' },

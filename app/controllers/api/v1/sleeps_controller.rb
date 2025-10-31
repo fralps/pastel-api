@@ -7,6 +7,7 @@ module Api
       include SearchConcern
 
       before_action :find_sleep, only: [:show, :update, :destroy]
+      before_action :format_date_params, only: [:create, :update]
 
       def index
         check_page_params
@@ -30,11 +31,7 @@ module Api
       end
 
       def create
-        date_hash = params[:sleep][:date]
-
-        timestamp = Time.zone.local(date_hash['year'], date_hash['month'], date_hash['day'])
-
-        sleep = Sleep.new(sleep_params.merge(user: current_user, date: timestamp))
+        sleep = current_user.sleeps.build(sleep_params)
 
         if sleep.save
           render json: SleepSerializer.render(sleep, view: :index_and_create), status: :created
@@ -65,6 +62,14 @@ module Api
 
       def find_sleep
         @sleep = current_user.sleeps.find(params[:id])
+      end
+
+      def format_date_params
+        date_hash = params[:sleep][:date]
+
+        timestamp = Time.zone.local(date_hash['year'], date_hash['month'], date_hash['day'])
+
+        params[:sleep][:date] = timestamp
       end
 
       def sleep_params
