@@ -33,7 +33,7 @@ RSpec.describe SleepSerializer do
     it 'renders the expected keys' do
       expect(serialized_sleep.keys).to contain_exactly(:id, :date, :description, :happened,
                                                        :intensity, :current_mood, :title,
-                                                       :datepicker_date, :formatted_date,
+                                                       :datepicker_date, :sleep_type, :formatted_date,
                                                        :tags_attributes)
     end
 

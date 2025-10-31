@@ -11,11 +11,12 @@ class SleepSerializer < Blueprinter::Base
   end
 
   view :update_and_show do
-    fields :date,
+    fields :current_mood,
+           :date,
            :description,
            :happened,
            :intensity,
-           :current_mood,
+           :sleep_type,
            :title
 
     field :datepicker_date do |sleep|
