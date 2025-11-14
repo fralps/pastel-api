@@ -36,6 +36,9 @@ gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'main', req
 # Handle statistics database queries
 gem 'groupdate'
 
+# Image uploading and processing
+gem 'image_processing', '~> 1.2'
+
 # Handle email catching
 gem 'letter_opener_web'
 
