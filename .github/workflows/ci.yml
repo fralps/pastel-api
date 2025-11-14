@@ -99,6 +99,13 @@ jobs:
           brakeman_version: gemfile
           fail_level: 'error'
 
+      - name: 🐽 Run TruffleHog Scan
+        uses: trufflesecurity/trufflehog@main
+        with:
+          base: ""
+          head: ${{ github.ref_name }}
+          extra_args: --results=verified,unknown
+
   analytics:
     name: 🔬 Analytics
     if: success()

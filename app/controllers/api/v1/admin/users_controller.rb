@@ -9,14 +9,12 @@ module Api
         before_action :find_user, only: :destroy
 
         def index
-          check_page_params
-
           users = User.order(id: :desc).where.not(id: @current_admin.id)
 
-          @pagy, users = pagy(users, limit: User::ITEMS_PER_PAGE)
+          @pagy, users = pagy(:offset, users, limit: User::ITEMS_PER_PAGE)
 
           render json: {
-            total_pages: pagy_metadata(@pagy),
+            total_pages: @pagy.count,
             paginated_result: UserSerializer.render(users),
             count: User.all.size,
             status: :ok
@@ -30,7 +28,7 @@ module Api
             code: 'user_not_deletable',
             message: 'User could not be deleted'
           }] },
-                 status: :unprocessable_entity
+                 status: :unprocessable_content
         end
 
         private
