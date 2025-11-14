@@ -10,16 +10,14 @@ module Api
       before_action :format_date_params, only: [:create, :update]
 
       def index
-        check_page_params
-
         sleeps = current_user.sleeps.ordered_by_date
 
         search_query ? sleeps = search_by_title(sleeps, search_query) : sleeps
 
-        @pagy, user_sleeps = pagy(sleeps, limit: Sleep::ITEMS_PER_PAGE)
+        @pagy, user_sleeps = pagy(:offset, sleeps, limit: Sleep::ITEMS_PER_PAGE)
 
         render json: {
-          total_pages: pagy_metadata(@pagy),
+          total_pages: @pagy.count,
           total_sleeps: sleeps.size,
           paginated_result: SleepSerializer.render_as_hash(user_sleeps.includes(:tags), view: :index_and_create),
           status: :ok
@@ -36,7 +34,7 @@ module Api
         if sleep.save
           render json: SleepSerializer.render(sleep, view: :index_and_create), status: :created
         else
-          render json: sleep.errors, status: :unprocessable_entity
+          render json: sleep.errors, status: :unprocessable_content
         end
       end
 
@@ -44,7 +42,7 @@ module Api
         if @sleep.update(sleep_params)
           render json: SleepSerializer.render(@sleep, view: :update_and_show)
         else
-          render json: @sleep.errors, status: :unprocessable_entity
+          render json: @sleep.errors, status: :unprocessable_content
         end
       end
 
@@ -55,7 +53,7 @@ module Api
           code: 'sleep_not_deletable',
           message: 'Sleep could not be deleted'
         }] },
-               status: :unprocessable_entity
+               status: :unprocessable_content
       end
 
       private

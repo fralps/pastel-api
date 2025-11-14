@@ -2,7 +2,7 @@
 
 # Main controller
 class ApplicationController < ActionController::API
-  include Pagy::Backend
+  include Pagy::Method
 
   respond_to :json
 end

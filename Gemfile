@@ -9,7 +9,7 @@ ruby '3.4.5'
 gem 'rails', '~> 8.1.1'
 
 # Pagination
-gem 'pagy'
+gem 'pagy', '~> 43.0'
 
 # Use postgresql as the database for Active Record
 gem 'pg'

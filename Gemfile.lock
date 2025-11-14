@@ -504,7 +504,7 @@ DEPENDENCIES
   letter_opener_web
   listen (~> 3.9)
   oj
-  pagy
+  pagy (~> 43.0)
   pg
   puma (~> 7.1)
   rack-cors
