@@ -272,7 +272,7 @@ GEM
       ostruct (>= 0.2)
     orm_adapter (0.5.0)
     ostruct (0.6.3)
-    pagy (43.0.6)
+    pagy (43.1.4)
       json
       yaml
     parallel (1.27.0)
@@ -513,7 +513,7 @@ DEPENDENCIES
   letter_opener_web
   listen (~> 3.9)
   oj
-  pagy (~> 43.0)
+  pagy (~> 43.1)
   pg
   puma (~> 7.1)
   rack-cors
