@@ -1,4 +1,4 @@
-name: Ping fucking Render dynos
+name: Ping Render dynos
 on:
   push:
     branches:
