@@ -6,7 +6,7 @@ module JsonErrors
 
   included do # rubocop:disable Metrics/BlockLength
     rescue_from StandardError,                      with: :render500
-    rescue_from ActiveRecord::RecordNotFound,       with: :render404 # Mongoid::Errors::DocumentNotFound
+    rescue_from ActiveRecord::RecordNotFound,       with: :render404
     rescue_from ActionController::ParameterMissing, with: :render400
 
     def render400(errors = 'required parameters invalid')
