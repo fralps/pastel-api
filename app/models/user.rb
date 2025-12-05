@@ -18,7 +18,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :confirmable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable,
+         :recoverable, :rememberable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
   # By-pass email confirmation for staging env during 6 months

@@ -27,10 +27,6 @@ RSpec.describe UserSerializer do
       expect(serialized_user[:role]).to eq(user.role)
     end
 
-    it 'renders the user sign_in_count' do
-      expect(serialized_user[:sign_in_count]).to eq(user.sign_in_count)
-    end
-
     it 'renders the user created_at' do
       expect(serialized_user[:created_at]).to eq(user.created_at.strftime('%d/%m/%Y'))
     end

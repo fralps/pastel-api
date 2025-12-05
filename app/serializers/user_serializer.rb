@@ -8,8 +8,7 @@ class UserSerializer < Blueprinter::Base
          :email,
          :firstname,
          :lastname,
-         :role,
-         :sign_in_count
+         :role
 
   field :created_at do |user|
     user.created_at.strftime('%d/%m/%Y')
