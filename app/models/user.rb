@@ -21,8 +21,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
-  # By-pass email confirmation for staging env during 1 month
-  self.allow_unconfirmed_access_for = 1.month if ENV.fetch('STAGING_ENV') == 'true'
+  # By-pass email confirmation for staging env during 6 months
+  self.allow_unconfirmed_access_for = 6.months if ENV.fetch('STAGING_ENV') == 'true'
 
   has_many :sleeps, dependent: :destroy
 
