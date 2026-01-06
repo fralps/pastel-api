@@ -60,6 +60,5 @@ module Api
     config.i18n.default_locale = :fr
 
     config.time_zone = 'Europe/Paris'
-    config.active_support.to_time_preserves_timezone = :zone
   end
 end

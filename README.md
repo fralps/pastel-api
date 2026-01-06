@@ -9,13 +9,13 @@
 
 ## Tech stack
 
-![Ruby](https://img.shields.io/badge/Ruby_v3.4.5-%23CC342D.svg?style=flat&logo=ruby&logoColor=white) ![Rails](https://img.shields.io/badge/Rails_v8.0.2-%23CC0000.svg?style=flat&logo=ruby-on-rails&logoColor=white)
+![Ruby](https://img.shields.io/badge/Ruby_v4.0.0-%23CC342D.svg?style=flat&logo=ruby&logoColor=white) ![Rails](https://img.shields.io/badge/Rails_v8.0.2-%23CC0000.svg?style=flat&logo=ruby-on-rails&logoColor=white)
 ![Postgres](https://img.shields.io/badge/Postgres-%23316192.svg?style=flat&logo=postgresql&logoColor=white)
 ![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=flat&logo=render&logoColor=white)
 
 ## Requirements
 
-- Ruby version `3.4.5` (with Rbenv)
+- Ruby version `4.0.0` (with Rbenv)
 - Bundler: `gem install bundler`
 - Ruby On Rails: `gem install rails`
 - Foreman: `gem install foreman`
