@@ -15,7 +15,7 @@
 
 ## Requirements
 
-- Ruby version `3.4.8` (with Rbenv)
+- Ruby version `4.0.0` (with Rbenv)
 - Bundler: `gem install bundler`
 - Ruby On Rails: `gem install rails`
 - Foreman: `gem install foreman`
