@@ -67,7 +67,7 @@ group :development do
   # Used for annotate models, serializers and models specs
   gem 'brakeman'
   gem 'bullet'
-  gem 'listen', '~> 3.9'
+  gem 'listen', '~> 3.10'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
