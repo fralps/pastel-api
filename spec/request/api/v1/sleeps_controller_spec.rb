@@ -22,9 +22,9 @@ RSpec.describe Api::V1::SleepsController, type: :request do
       expect(json_response['paginated_result'].size).to eq(Sleep::ITEMS_PER_PAGE - 5)
     end
 
-    it 'does not return first page with wrong params' do
-      get '/api/v1/sleeps', headers: auth_headers(user), params: { page: 0 }
-      expect(json_response['paginated_result']).to be_nil
+    it 'returns first page with wrong params' do
+      get '/api/v1/sleeps', headers: auth_headers(user), params: { page: 'wrong params' }
+      expect(json_response['paginated_result'].size).to eq(Sleep::ITEMS_PER_PAGE)
     end
 
     context 'when request has a query params' do
