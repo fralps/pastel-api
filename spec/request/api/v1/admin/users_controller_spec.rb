@@ -24,9 +24,9 @@ RSpec.describe Api::V1::Admin::UsersController, type: :request do
       expect(JSON.parse(json_response['paginated_result']).size).to eq(User::ITEMS_PER_PAGE)
     end
 
-    it 'does not return first page with wrong params' do
-      get '/api/v1/admin/users', headers: auth_headers(admin_user), params: { page: 0 }
-      expect(json_response['paginated_result']).to be_nil
+    it 'returns first page with wrong params' do
+      get '/api/v1/admin/users', headers: auth_headers(admin_user), params: { page: 'wrong params' }
+      expect(JSON.parse(json_response['paginated_result']).size).to eq(User::ITEMS_PER_PAGE)
     end
 
     it 'returns users count' do
