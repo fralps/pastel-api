@@ -48,8 +48,8 @@ RSpec.describe Api::V1::Users::SessionsController, type: :request do
       delete '/api/v1/users/sign_out', headers: auth_headers(user)
     end
 
-    it 'returns 200' do
-      expect(response).to be_successful
+    it 'returns 401' do
+      expect(response).to be_unauthorized
     end
   end
 end
