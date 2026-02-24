@@ -51,7 +51,7 @@ gem 'rack-cors'
 group :development, :test do
   gem 'bundler-audit'
   gem 'rspec-json_expectations'
-  gem 'rspec-rails', '~> 8.0.2'
+  gem 'rspec-rails', '~> 8.0.3'
   gem 'rubocop', require: false
   gem 'rubocop-checkstyle_formatter', require: false
   gem 'rubocop-factory_bot', require: false
