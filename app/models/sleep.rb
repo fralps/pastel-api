@@ -34,7 +34,7 @@ class Sleep < ApplicationRecord
 
   accepts_nested_attributes_for :tags, allow_destroy: true
 
-  encrypts :title, :description, :current_mood
+  encrypts :title, :description, :current_mood, :analysis
 
   validates :title, presence: true
   validates :date, presence: true

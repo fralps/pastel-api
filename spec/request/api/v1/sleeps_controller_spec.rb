@@ -206,7 +206,7 @@ RSpec.describe Api::V1::SleepsController, type: :request do
     end
 
     it 'returns the right message' do
-      expect(json_response['message']).to eq('Sleep analysis started')
+      expect(json_response['code']).to eq('analysis_started')
     end
 
     it 'returns a 404 if sleep is not found' do

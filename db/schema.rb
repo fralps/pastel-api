@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_22_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_22_094518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -119,6 +119,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_000000) do
   end
 
   create_table "sleeps", force: :cascade do |t|
+    t.text "analysis"
+    t.boolean "analysis_done", default: false
     t.datetime "created_at", null: false
     t.string "current_mood"
     t.datetime "date", null: false

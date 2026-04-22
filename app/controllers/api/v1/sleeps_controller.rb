@@ -57,9 +57,14 @@ module Api
       end
 
       def analyse
+        if @sleep.analysis_done? || @sleep.analysis.present?
+          return render json: { message: 'Sleep analysis already done', code: 'analysis_already_done' },
+                        status: :ok
+        end
+
         SleepAnalyseJob.perform_later(@sleep.id)
 
-        render json: { message: 'Sleep analysis started' }, status: :ok
+        render json: { message: 'Sleep analysis started', code: 'analysis_started' }, status: :ok
       end
 
       private
