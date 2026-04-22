@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateSolidQueueTables < ActiveRecord::Migration[8.1]
+  # rubocop:disable Metrics/AbcSize
   def change
     create_table :solid_queue_jobs do |t|
       t.string :queue_name, null: false
@@ -142,3 +143,4 @@ class CreateSolidQueueTables < ActiveRecord::Migration[8.1]
     add_foreign_key :solid_queue_scheduled_executions, :solid_queue_jobs, column: :job_id, on_delete: :cascade
   end
 end
+# rubocop:enable Metrics/AbcSize
