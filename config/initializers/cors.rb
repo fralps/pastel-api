@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 FRONT_ORIGINS = [
+  'http://localhost:5100',
   'http://localhost:5200',
   'http://localhost:3000',
   'https://app-pastel.vercel.app'
