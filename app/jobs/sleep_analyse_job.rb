@@ -12,7 +12,9 @@ class SleepAnalyseJob < ApplicationJob
     SleepAnalysisService.call(sleep, locale)
   rescue StandardError => e
     Rails.logger.error("Error analyzing sleep with ID: #{sleep_id} - #{e.message}")
-    sleep.update_column(:analysis_status, "not_started") if defined?(sleep) && sleep.present? && sleep.has_attribute?(:analysis_status)
+    if defined?(sleep) && sleep.present? && sleep.has_attribute?(:analysis_status)
+      sleep.mark_as_analysis_not_started
+    end
     raise
   end
 end
