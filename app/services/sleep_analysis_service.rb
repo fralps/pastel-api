@@ -107,7 +107,7 @@ class SleepAnalysisService < ApplicationService
       "\n\nSleep title: #{sleep.title}" \
       "\nSleep type: #{sleep.sleep_type}" \
       "\nDescription: #{sleep.description}" \
-      "\nTags: #{sleep.tags.join(', ')}" \
+      "\nTags: #{sleep.tags.pluck(:name).join(', ')}" \
       "\nCurrent mood: #{sleep.current_mood}" \
       "\nIntensity: #{sleep.intensity}" \
       "\nWhen: #{sleep.happened}"
