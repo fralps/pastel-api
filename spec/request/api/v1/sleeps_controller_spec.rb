@@ -201,12 +201,16 @@ RSpec.describe Api::V1::SleepsController, type: :request do
 
     it_behaves_like 'A success response'
 
-    it 'enqueues a SleepAnalyseJob' do
-      expect(SleepAnalyseJob).to have_been_enqueued.with(sleep.id)
+    it 'enqueues a SleepAnalyseJob with the sleep id' do
+      expect(SleepAnalyseJob).to have_been_enqueued.with(sleep.id, anything)
     end
 
-    it 'returns the right message' do
-      expect(json_response['code']).to eq('analysis_started')
+    it 'enqueues a SleepAnalyseJob with the default locale when none is provided' do
+      expect(SleepAnalyseJob).to have_been_enqueued.with(sleep.id, I18n.default_locale)
+    end
+
+    it 'returns the updated sleep with analysis_status in progress' do
+      expect(json_response['analysis_status']).to eq('in_progress')
     end
 
     it 'returns a 404 if sleep is not found' do
@@ -222,14 +226,14 @@ RSpec.describe Api::V1::SleepsController, type: :request do
     end
 
     context 'when analysis is already done' do
-      let(:sleep) { create(:sleep, user:, analysis_done: true) }
+      let(:sleep) { create(:sleep, user:, analysis_status: 'done') }
 
       it 'returns a 200' do
         expect(response).to have_http_status(:ok)
       end
 
-      it 'returns the analysis_already_done code' do
-        expect(json_response['code']).to eq('analysis_already_done')
+      it 'returns the analysis_already_in_progress_or_done code' do
+        expect(json_response['code']).to eq('analysis_already_in_progress_or_done')
       end
 
       it 'does not enqueue a SleepAnalyseJob' do
@@ -244,8 +248,8 @@ RSpec.describe Api::V1::SleepsController, type: :request do
         expect(response).to have_http_status(:ok)
       end
 
-      it 'returns the analysis_already_done code' do
-        expect(json_response['code']).to eq('analysis_already_done')
+      it 'returns the analysis_already_in_progress_or_done code' do
+        expect(json_response['code']).to eq('analysis_already_in_progress_or_done')
       end
 
       it 'does not enqueue a SleepAnalyseJob' do

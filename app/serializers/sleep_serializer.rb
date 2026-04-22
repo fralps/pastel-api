@@ -5,13 +5,15 @@ class SleepSerializer < Blueprinter::Base
   identifier :id
 
   view :index_and_create do
-    fields :current_mood, :date, :description, :sleep_type, :title
+    fields :analysis_status, :current_mood, :date, :description, :sleep_type, :title
 
     association :tags, name: :tags_attributes, blueprint: TagSerializer
   end
 
   view :update_and_show do
-    fields :current_mood,
+    fields :analysis,
+           :analysis_status,
+           :current_mood,
            :date,
            :description,
            :happened,

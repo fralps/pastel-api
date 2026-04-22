@@ -15,7 +15,8 @@ RSpec.describe SleepAnalysisService do
            sleep_type: Sleep::SLEEP_TYPE[:dream])
   end
 
-  let(:service) { described_class.new(sleep_record) }
+  let(:locale) { :fr }
+  let(:service) { described_class.new(sleep_record, locale) }
 
   describe '#initialize' do
     it 'assigns the sleep record' do
@@ -28,6 +29,10 @@ RSpec.describe SleepAnalysisService do
 
     it 'sets the correct Mistral API URL' do
       expect(service.mistral_api_url).to eq('https://api.mistral.ai/v1/chat/completions')
+    end
+
+    it 'assigns the locale' do
+      expect(service.locale).to eq(:fr)
     end
   end
 
@@ -44,9 +49,9 @@ RSpec.describe SleepAnalysisService do
         expect(sleep_record.reload.analysis).to be_present
       end
 
-      it 'marks analysis_done as true' do
+      it 'sets analysis_status to done' do
         service.call
-        expect(sleep_record.reload.analysis_done).to be(true)
+        expect(sleep_record.reload.analysis_status).to eq('done')
       end
 
       it 'persists the analysis text returned by the API' do
@@ -66,9 +71,9 @@ RSpec.describe SleepAnalysisService do
         expect(sleep_record.reload.analysis).to be_nil
       end
 
-      it 'does not mark analysis_done as true' do
+      it 'does not set analysis_status to done' do
         service.call
-        expect(sleep_record.reload.analysis_done).to be_falsey
+        expect(sleep_record.reload.analysis_status).not_to eq('done')
       end
 
       it 'logs the error' do

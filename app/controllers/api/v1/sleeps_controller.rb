@@ -57,14 +57,22 @@ module Api
       end
 
       def analyse
-        if @sleep.analysis_done? || @sleep.analysis.present?
-          return render json: { message: 'Sleep analysis already done', code: 'analysis_already_done' },
-                        status: :ok
+        if @sleep.analysis_status == 'done' || @sleep.analysis_status == 'in_progress' || @sleep.analysis.present?
+          return render json: { message: 'Sleep analysis already in progress or done',
+                                code: 'analysis_already_in_progress_or_done' }, status: :ok
         end
 
-        SleepAnalyseJob.perform_later(@sleep.id)
+        locale = params[:locale] || I18n.default_locale
 
-        render json: { message: 'Sleep analysis started', code: 'analysis_started' }, status: :ok
+        SleepAnalyseJob.perform_later(@sleep.id, locale)
+
+        @sleep.analysis_status = :in_progress
+        if @sleep.save
+          render json: SleepSerializer.render(@sleep, view: :update_and_show)
+        else
+          render json: { message: 'Failed to start sleep analysis', code: 'analysis_start_failed' },
+                 status: :unprocessable_content
+        end
       end
 
       private

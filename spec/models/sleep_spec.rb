@@ -155,6 +155,40 @@ RSpec.describe Sleep do
     end
   end
 
+  describe '#mark_as_analysis_not_started' do
+    let(:sleep) { create(:sleep, user:, analysis_status: 'done') }
+
+    it 'sets analysis_status to not_started' do
+      sleep.mark_as_analysis_not_started
+      expect(sleep.reload.analysis_status).to eq('not_started')
+    end
+
+    it 'persists the change' do
+      sleep.mark_as_analysis_not_started
+      expect(described_class.find(sleep.id).analysis_status).to eq('not_started')
+    end
+  end
+
+  describe '#mark_as_analysis_done' do
+    let(:analysis_text) { 'This dream involves flying over mountains.' }
+
+    it 'sets analysis_status to done' do
+      sleep.mark_as_analysis_done(analysis_text)
+      expect(sleep.reload.analysis_status).to eq('done')
+    end
+
+    it 'sets the analysis attribute' do
+      sleep.mark_as_analysis_done(analysis_text)
+      expect(sleep.reload.analysis).to eq(analysis_text)
+    end
+
+    it 'persists the changes' do
+      sleep.mark_as_analysis_done(analysis_text)
+      updated = described_class.find(sleep.id)
+      expect(updated.analysis_status).to eq('done')
+    end
+  end
+
   describe 'factory' do
     it 'creates a valid sleep' do
       expect(build(:sleep)).to be_valid

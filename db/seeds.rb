@@ -68,6 +68,7 @@ if Rails.env.development?
       intensity: Sleep::INTENSITY[Sleep::INTENSITY.keys.sample],
       happened: Sleep::HAPPENED[Sleep::HAPPENED.keys.sample],
       sleep_type: Sleep::SLEEP_TYPE[Sleep::SLEEP_TYPE.keys.sample],
+      analysis_status: Sleep::ANALYSIS_STATUS[:not_started],
       user: dev_user
     )
   end

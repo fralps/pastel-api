@@ -29,6 +29,14 @@ class Sleep < ApplicationRecord
     erotic: 'erotic'
   }.freeze
 
+  ANALYSIS_STATUS = {
+    not_started: 'not_started',
+    in_progress: 'in_progress',
+    done: 'done'
+  }.freeze
+
+  enum :analysis_status, ANALYSIS_STATUS, default: 'not_started'
+
   belongs_to :user
   has_many :tags, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :sleep
 
@@ -43,6 +51,7 @@ class Sleep < ApplicationRecord
   validates :intensity, inclusion: { in: INTENSITY.values }
   validates :happened, inclusion: { in: HAPPENED.values }
   validates :sleep_type, inclusion: { in: SLEEP_TYPE.values }
+  validates :analysis_status, inclusion: { in: ANALYSIS_STATUS.values }
 
   scope :ordered_by_date, -> { order(date: :desc) }
   scope :group_by_month_from_current_year, lambda {
@@ -53,4 +62,12 @@ class Sleep < ApplicationRecord
       .size
   }
   scope :years, ->(range) { group_by_year(:date, format: '%Y-%m', range:).size }
+
+  def mark_as_analysis_not_started
+    update(analysis_status: :not_started)
+  end
+
+  def mark_as_analysis_done(analysis)
+    update(analysis: analysis, analysis_status: :done)
+  end
 end

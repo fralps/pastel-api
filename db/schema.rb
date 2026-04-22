@@ -121,6 +121,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_094518) do
   create_table "sleeps", force: :cascade do |t|
     t.text "analysis"
     t.boolean "analysis_done", default: false
+    t.string "analysis_status", default: "not_started", null: false
     t.datetime "created_at", null: false
     t.string "current_mood"
     t.datetime "date", null: false
@@ -131,6 +132,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_094518) do
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.index ["analysis_status"], name: "index_sleeps_on_analysis_status"
     t.index ["sleep_type"], name: "index_sleeps_on_sleep_type"
     t.index ["user_id", "sleep_type"], name: "index_sleeps_on_user_id_and_sleep_type"
     t.index ["user_id"], name: "index_sleeps_on_user_id"

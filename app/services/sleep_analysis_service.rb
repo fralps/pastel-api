@@ -6,15 +6,16 @@ require 'net/http'
 # Request to Mistral AI API to get an intepretation of the sleep description
 class SleepAnalysisService < ApplicationService
   attr_accessor :sleep
-  attr_reader :mistral_api_key, :mistral_api_url
+  attr_reader :mistral_api_key, :mistral_api_url, :locale
 
   # Initializes the service with the sleep record to analyze.
   # Reads the Mistral API key from the environment and sets the API endpoint.
-  def initialize(sleep)
+  def initialize(sleep, locale)
     super()
     @mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)
     @mistral_api_url = 'https://api.mistral.ai/v1/chat/completions'
     @sleep = sleep
+    @locale = locale
   end
 
   # Entry point of the service.
@@ -45,10 +46,14 @@ class SleepAnalysisService < ApplicationService
       response.body
     else
       Rails.logger.error "Failed to get response from Mistral API: #{response.code} - #{response.message}"
+      sleep.mark_as_analysis_not_started
+
       nil
     end
   rescue StandardError => e
     Rails.logger.error "Error while sending request to Mistral API: #{e.message}"
+    sleep.mark_as_analysis_not_started
+
     nil
   end
 
@@ -73,15 +78,11 @@ class SleepAnalysisService < ApplicationService
       messages: [
         {
           role: 'system',
-          content: 'You are a helpful assistant that analyzes dream description, tags and emotion' \
-                   'in order to interpret the dream.'
+          content: system_prompt
         },
         {
           role: 'user',
-          content: 'Analyze the following sleep description, tags and emotion and provide an interpretation of the dream:' \
-                   "\n\nSleep title: #{sleep.title} \nSleep type: #{sleep.sleep_type} \nDescription: #{sleep.description}" \
-                   "\nTags: #{sleep.tags.join(', ')} \nCurrent mood: #{sleep.current_mood} \nIntensity: #{sleep.intensity}" \
-                   "\nWhen: #{sleep.happened}"
+          content: user_prompt
         }
       ]
     }.to_json
@@ -89,6 +90,26 @@ class SleepAnalysisService < ApplicationService
 
   # Persists the AI-generated analysis on the sleep record and marks the analysis as done.
   def update_sleep_with_analysis(analysis)
-    sleep.update(analysis: analysis, analysis_done: true)
+    sleep.mark_as_analysis_done(analysis)
+  end
+
+  def system_prompt
+    'You are a helpful assistant that analyzes dreams in order to interpret the dream.' \
+      'You need to respond with a concise interpretation of the dream based on the provided information.' \
+      "\n\nSleep title, description, tags, sleep type, intensity, and emotion will be provided in the user message. " \
+      'Focus on providing insights about the possible meaning of the dream, the emotions involved, and any relevant symbolism.' \
+      'Keep the interpretation concise and relevant to the provided sleep information.' \
+      "You will need to respond in the same language as the provided locale: #{locale}."
+  end
+
+  def user_prompt
+    'Analyze the following sleep description, tags and emotion and provide an interpretation of the dream:' \
+      "\n\nSleep title: #{sleep.title}" \
+      "\nSleep type: #{sleep.sleep_type}" \
+      "\nDescription: #{sleep.description}" \
+      "\nTags: #{sleep.tags.join(', ')}" \
+      "\nCurrent mood: #{sleep.current_mood}" \
+      "\nIntensity: #{sleep.intensity}" \
+      "\nWhen: #{sleep.happened}"
   end
 end
