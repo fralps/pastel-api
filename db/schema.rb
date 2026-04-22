@@ -120,7 +120,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_094518) do
 
   create_table "sleeps", force: :cascade do |t|
     t.text "analysis"
-    t.boolean "analysis_done", default: false
     t.string "analysis_status", default: "not_started", null: false
     t.datetime "created_at", null: false
     t.string "current_mood"
