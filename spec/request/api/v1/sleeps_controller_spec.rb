@@ -220,5 +220,37 @@ RSpec.describe Api::V1::SleepsController, type: :request do
       post "/api/v1/sleeps/#{other_sleep.id}/analyse", headers: auth_headers(user)
       expect(response).to be_not_found
     end
+
+    context 'when analysis is already done' do
+      let(:sleep) { create(:sleep, user:, analysis_done: true) }
+
+      it 'returns a 200' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns the analysis_already_done code' do
+        expect(json_response['code']).to eq('analysis_already_done')
+      end
+
+      it 'does not enqueue a SleepAnalyseJob' do
+        expect(SleepAnalyseJob).not_to have_been_enqueued
+      end
+    end
+
+    context 'when analysis text is already present' do
+      let(:sleep) { create(:sleep, user:, analysis: 'Some previous analysis') }
+
+      it 'returns a 200' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns the analysis_already_done code' do
+        expect(json_response['code']).to eq('analysis_already_done')
+      end
+
+      it 'does not enqueue a SleepAnalyseJob' do
+        expect(SleepAnalyseJob).not_to have_been_enqueued
+      end
+    end
   end
 end
