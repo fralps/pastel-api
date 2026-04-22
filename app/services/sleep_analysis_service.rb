@@ -3,7 +3,7 @@
 require 'net/http'
 
 # Service to analyse sleep description using AI
-# Request to Mistral AI API to get an intepretation of the sleep description
+# Request to Mistral AI API to get an interpretation of the sleep description
 class SleepAnalysisService < ApplicationService
   attr_accessor :sleep
   attr_reader :mistral_api_key, :mistral_api_url, :locale
