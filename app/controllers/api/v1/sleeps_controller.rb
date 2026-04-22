@@ -6,7 +6,7 @@ module Api
     class SleepsController < ApiController
       include SearchConcern
 
-      before_action :find_sleep, only: [:show, :update, :destroy]
+      before_action :find_sleep, only: [:show, :update, :destroy, :analyse]
       before_action :format_date_params, only: [:create, :update]
 
       def index
@@ -54,6 +54,12 @@ module Api
           message: 'Sleep could not be deleted'
         }] },
                status: :unprocessable_content
+      end
+
+      def analyse
+        SleepAnalyseJob.perform_later(@sleep.id)
+
+        render json: { message: 'Sleep analysis started' }, status: :ok
       end
 
       private

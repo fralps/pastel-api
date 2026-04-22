@@ -62,4 +62,16 @@ RSpec.describe 'routes for Sleep' do
       expect(delete: '/api/v1/sleeps/:id').to be_routable
     end
   end
+
+  describe '#POST /api/v1/sleeps/:id/analyse' do
+    it 'routes /api/v1/sleeps/:id/analyse to the sleeps controller' do
+      expect(post: '/api/v1/sleeps/:id/analyse').to route_to(
+        controller: 'api/v1/sleeps', action: 'analyse', id: ':id'
+      )
+    end
+
+    it 'routes to /api/v1/sleeps/:id/analyse' do
+      expect(post: '/api/v1/sleeps/:id/analyse').to be_routable
+    end
+  end
 end

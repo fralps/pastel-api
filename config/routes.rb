@@ -25,7 +25,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :pings, only: :index
-      resources :sleeps, only: [:index, :show, :create, :update, :destroy]
+      resources :sleeps, only: [:index, :show, :create, :update, :destroy] do
+        member do
+          post 'analyse', to: 'sleeps#analyse'
+        end
+      end
       resources :contacts, only: :create
 
       namespace :admin do

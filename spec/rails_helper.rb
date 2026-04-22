@@ -76,6 +76,7 @@ RSpec.configure do |config|
 
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include RequestHelpers, type: :request
+  config.include ActiveJob::TestHelper, type: :job
 
   config.before do
     DatabaseCleaner.start

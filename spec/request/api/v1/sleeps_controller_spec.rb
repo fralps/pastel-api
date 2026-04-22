@@ -190,4 +190,35 @@ RSpec.describe Api::V1::SleepsController, type: :request do
       end
     end
   end
+
+  describe '#POST /api/v1/sleeps/:id/analyse' do
+    let(:user) { create(:user) }
+    let(:sleep) { create(:sleep, user:) }
+
+    before do
+      post "/api/v1/sleeps/#{sleep.id}/analyse", headers: auth_headers(user)
+    end
+
+    it_behaves_like 'A success response'
+
+    it 'enqueues a SleepAnalyseJob' do
+      expect(SleepAnalyseJob).to have_been_enqueued.with(sleep.id)
+    end
+
+    it 'returns the right message' do
+      expect(json_response['message']).to eq('Sleep analysis started')
+    end
+
+    it 'returns a 404 if sleep is not found' do
+      post '/api/v1/sleeps/wrong-id/analyse', headers: auth_headers(user)
+      expect(response).to be_not_found
+    end
+
+    it 'returns a 404 if sleep belongs to another user' do
+      other_user = create(:user, :other_user)
+      other_sleep = create(:sleep, user: other_user)
+      post "/api/v1/sleeps/#{other_sleep.id}/analyse", headers: auth_headers(user)
+      expect(response).to be_not_found
+    end
+  end
 end
