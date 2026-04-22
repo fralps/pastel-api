@@ -3,6 +3,8 @@
 Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if ENV['ENVIRONMENT'] == 'development' || ENV['ENVIRONMENT'] == 'staging'
 
+  mount MissionControl::Jobs::Engine, at: '/jobs'
+
   devise_for :users, skip: :all
 
   devise_scope :user do

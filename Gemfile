@@ -42,11 +42,17 @@ gem 'image_processing', '~> 1.2'
 # Handle email catching
 gem 'letter_opener_web'
 
+gem 'mission_control-jobs', '~> 1.1'
+
 # Fast JSON
 gem 'oj'
 
+gem 'propshaft'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
+
+gem 'solid_queue'
 
 group :development, :test do
   gem 'bundler-audit'

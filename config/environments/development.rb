@@ -62,11 +62,17 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.delivery_method = :letter_opener_web
 
+  # Jobs configuration
+  config.active_job.queue_adapter = :solid_queue
+
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  MissionControl::Jobs.http_basic_auth_user = ENV.fetch('SOLID_QUEUE_HTTP_BASIC_AUTH_USER', nil)
+  MissionControl::Jobs.http_basic_auth_password = ENV.fetch('SOLID_QUEUE_HTTP_BASIC_AUTH_PASSWORD', nil)
 end
 # rubocop:enable Metrics/BlockLength
