@@ -38,18 +38,18 @@ class SleepAnalysisService < ApplicationService
                                     'Content-Type' => 'application/json',
                                     'Authorization' => "Bearer #{mistral_api_key}"
                                   })
-
     request.body = build_payload
-
     response = http.request(request)
 
     if response.is_a?(Net::HTTPSuccess)
       response.body
     else
       Rails.logger.error "Failed to get response from Mistral API: #{response.code} - #{response.message}"
+      nil
     end
   rescue StandardError => e
     Rails.logger.error "Error while sending request to Mistral API: #{e.message}"
+    nil
   end
 
   # Extracts the analysis text from the Mistral API response.

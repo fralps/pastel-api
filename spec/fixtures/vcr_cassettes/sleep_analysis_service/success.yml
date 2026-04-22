@@ -1,0 +1,36 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"magistral-small-2509","response_format":{"type":"text"},"messages":[{"role":"system","content":"You
+        are a helpful assistant that analyzes dream description, tags and emotionin
+        order to interpret the dream."},{"role":"user","content":"Analyze the following
+        sleep description, tags and emotion and provide an interpretation of the dream:\n\nSleep
+        title: Flying over mountains \nSleep type: dream \nDescription: I was flying
+        over snowy mountains\nTags: flying, mountains \nCurrent mood: excited \nIntensity:
+        clear\nWhen: sleeping"}]}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-test-123","object":"chat.completion","created":1745000000,"model":"magistral-small-2509","choices":[{"index":0,"message":{"role":"assistant","content":[{"type":"thinking","thinking":"Let
+        me analyze this dream..."},{"type":"text","text":"This dream about flying over
+        snowy mountains suggests a desire for freedom and transcendence. Flying in
+        dreams often symbolizes ambition and a sense of liberation from daily constraints.
+        The snowy mountains represent challenges or goals that feel both daunting and
+        beautiful. Your excited mood reinforces a positive outlook toward these aspirations."}]},"finish_reason":"stop"}],"usage":{"prompt_tokens":80,"completion_tokens":60,"total_tokens":140}}'
+  recorded_at: Wed, 22 Apr 2026 10:00:00 GMT
+recorded_with: VCR 6.3.1
