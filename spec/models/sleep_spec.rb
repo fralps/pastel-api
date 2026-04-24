@@ -144,6 +144,26 @@ RSpec.describe Sleep do
         expect(described_class.years(2.years.ago..Time.zone.now).values.sum).to eq(2)
       end
     end
+
+    describe '.ai_analyzed' do
+      it 'includes sleeps with analysis and status done' do
+        analyzed = create(:sleep, user:, analysis: 'Some analysis', analysis_status: 'done')
+
+        expect(described_class.ai_analyzed).to include(analyzed)
+      end
+
+      it 'excludes sleeps with no analysis' do
+        create(:sleep, user:, analysis: nil, analysis_status: 'done')
+
+        expect(described_class.ai_analyzed).to be_empty
+      end
+
+      it 'excludes sleeps with analysis but status not done' do
+        create(:sleep, user:, analysis: 'Some analysis', analysis_status: 'in_progress')
+
+        expect(described_class.ai_analyzed).to be_empty
+      end
+    end
   end
 
   describe 'tags ordering' do

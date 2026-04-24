@@ -16,6 +16,7 @@ RSpec.describe Api::V1::Stats::DashboardStatsController, type: :request do
         create_list(:sleep, 3, sleep_type: 'sleep_talking', user: user)
         create_list(:sleep, 6, sleep_type: 'sleep_apnea', user: user)
         create_list(:sleep, 1, sleep_type: 'erotic', user: user)
+        create_list(:sleep, 4, sleep_type: 'dream', user: user, analysis_status: :done, analysis: 'Some analysis')
         get '/api/v1/stats/dashboard_stats', headers: auth_headers(user)
       end
 
@@ -23,6 +24,10 @@ RSpec.describe Api::V1::Stats::DashboardStatsController, type: :request do
 
       it 'returns the current_user totals json key' do
         expect(json_response).to include('totals')
+      end
+
+      it 'returns the current_user ai_analyzed json key' do
+        expect(json_response).to include('ai_analyzed')
       end
 
       # it 'returns the current_user by_month json key' do
@@ -35,7 +40,7 @@ RSpec.describe Api::V1::Stats::DashboardStatsController, type: :request do
 
       # TOTALS
       it 'returns correct dreams total count' do
-        expect(json_response['totals']['dream']).to eq(10)
+        expect(json_response['totals']['dream']).to eq(14)
       end
 
       it 'returns correct lucids total count' do
@@ -64,6 +69,10 @@ RSpec.describe Api::V1::Stats::DashboardStatsController, type: :request do
 
       it 'returns correct erotic total count' do
         expect(json_response['totals']['erotic']).to eq(1)
+      end
+
+      it 'returns correct ai_analyzed total count' do
+        expect(json_response['ai_analyzed']).to eq(4)
       end
     end
 

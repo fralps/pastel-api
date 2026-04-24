@@ -62,6 +62,7 @@ class Sleep < ApplicationRecord
       .size
   }
   scope :years, ->(range) { group_by_year(:date, format: '%Y-%m', range:).size }
+  scope :ai_analyzed, -> { where.not(analysis: nil).where(analysis_status: :done) }
 
   def mark_as_analysis_not_started
     update(analysis_status: :not_started)
