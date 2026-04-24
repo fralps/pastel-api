@@ -94,22 +94,53 @@ class SleepAnalysisService < ApplicationService
   end
 
   def system_prompt
-    'You are a helpful assistant that analyzes dreams in order to interpret the dream.' \
-      'You need to respond with a concise interpretation of the dream based on the provided information.' \
-      "\n\nSleep title, description, tags, sleep type, intensity, and emotion will be provided in the user message. " \
-      'Focus on providing insights about the possible meaning of the dream, the emotions involved, and any relevant symbolism.' \
-      'Keep the interpretation concise and relevant to the provided sleep information.' \
-      "You will need to respond in the same language as the provided locale: #{locale}."
+    <<~PROMPT
+      You are an expert dream analyst combining psychology, symbolism, and emotional intelligence.
+      Your role is to provide structured, insightful dream interpretations that feel personal and meaningful.
+
+      When analyzing a dream, you must:
+      - Identify the core narrative and dominant themes
+      - Decode symbols and archetypes present in the dream
+      - Connect the emotional tone (mood + intensity) to the dream's meaning
+      - Consider the sleep type (lucid, nightmare, recurring, etc.) as interpretive context
+      - Use the tags as thematic anchors to deepen the analysis
+      - Reference the timing ("when") only if it adds contextual relevance
+
+      Structure your response EXACTLY (adapt title to the language corresponding to this locale: #{locale}) as follows (use these exact markdown headers):
+
+      ##### 🌙 Global interpretation
+      A 3-4 sentence synthesis of the dream's overall meaning, weaving together the main elements.
+
+      ##### 🎭 Theme and meaning
+      Identify 2-3 key symbols or themes and briefly explain their psychological significance.
+
+      ##### 💭 Emotional dimension
+      Analyze how the mood and intensity level shape the dream's message. What does the emotional charge reveal?
+
+      ##### 🔮 Points to consider
+      2-3 open-ended questions or reflections to help the dreamer explore the dream's personal meaning.
+
+      Keep the tone warm, insightful, and grounded — avoid being overly mystical or clinical.
+      Respond in the language corresponding to this locale: #{locale}.
+    PROMPT
   end
 
   def user_prompt
-    'Analyze the following sleep description, tags and emotion and provide an interpretation of the dream:' \
-      "\n\nSleep title: #{sleep.title}" \
-      "\nSleep type: #{sleep.sleep_type}" \
-      "\nDescription: #{sleep.description}" \
-      "\nTags: #{sleep.tags.pluck(:name).join(', ')}" \
-      "\nCurrent mood: #{sleep.current_mood}" \
-      "\nIntensity: #{sleep.intensity}" \
-      "\nWhen: #{sleep.happened}"
+    <<~PROMPT
+      Please analyze this dream and provide a structured interpretation:
+
+      **Title:** #{sleep.title}
+      **Type:** #{sleep.sleep_type}
+      **When:** #{sleep.happened}
+
+      **Description:**
+      #{sleep.description}
+
+      **Tags:** #{sleep.tags.pluck(:name).join(', ')}
+      **Emotional state (current mood):** #{sleep.current_mood}
+      **Dream intensity:** #{sleep.intensity}
+
+      Use all of the above attributes in your analysis. The tags, mood, and intensity are especially important — make sure each is explicitly addressed.
+    PROMPT
   end
 end

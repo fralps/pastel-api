@@ -8,10 +8,10 @@ RSpec.describe SleepAnalyseJob do
     let(:sleep) { create(:sleep, user:) }
     let(:locale) { :fr }
 
-    it 'enqueues job on default queue' do
+    it 'enqueues job on sleep_analysis queue' do
       expect {
         described_class.perform_later(sleep.id, locale)
-      }.to have_enqueued_job(described_class).on_queue('default')
+      }.to have_enqueued_job(described_class).on_queue('sleep_analysis')
     end
 
     it 'returns early if sleep is not found' do

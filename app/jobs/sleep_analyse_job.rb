@@ -2,13 +2,13 @@
 
 # Job to analyse sleep description
 class SleepAnalyseJob < ApplicationJob
-  queue_as :default
+  queue_as :sleep_analysis
 
   def perform(sleep_id, locale)
     sleep = Sleep.find_by(id: sleep_id)
 
     return if sleep.blank?
-    return if sleep.analysis_status == 'done' || sleep.analysis_status == 'in_progress' || sleep.analysis.present?
+    return if sleep.analysis_status == 'done' || sleep.analysis.present?
 
     SleepAnalysisService.call(sleep, locale)
   rescue StandardError => e
