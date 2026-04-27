@@ -1,2 +1,2 @@
-web: bundle exec puma -C config/puma.rb 
-jobs: bin/jobs
+web: rails s -u puma -p $PORT
+jobs: rails solid_queue:start
