@@ -3,6 +3,8 @@
 Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if ENV['ENVIRONMENT'] == 'development' || ENV['ENVIRONMENT'] == 'staging'
 
+  mount MissionControl::Jobs::Engine, at: '/jobs'
+
   devise_for :users, skip: :all
 
   devise_scope :user do
@@ -23,7 +25,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :pings, only: :index
-      resources :sleeps, only: [:index, :show, :create, :update, :destroy]
+      resources :sleeps, only: [:index, :show, :create, :update, :destroy] do
+        member do
+          post 'analyse', to: 'sleeps#analyse'
+        end
+      end
       resources :contacts, only: :create
 
       namespace :admin do

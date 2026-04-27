@@ -11,7 +11,7 @@ RSpec.describe SleepSerializer do
 
     it 'renders the expected keys' do
       expect(serialized_sleep.keys).to contain_exactly(:id, :title, :date, :description, :sleep_type, :tags_attributes,
-                                                       :current_mood)
+                                                       :current_mood, :analysis_status)
     end
 
     it 'renders the correct id' do
@@ -34,7 +34,7 @@ RSpec.describe SleepSerializer do
       expect(serialized_sleep.keys).to contain_exactly(:id, :date, :description, :happened,
                                                        :intensity, :current_mood, :title,
                                                        :datepicker_date, :sleep_type, :formatted_date,
-                                                       :tags_attributes)
+                                                       :tags_attributes, :analysis, :analysis_status)
     end
 
     it 'renders the correct id' do
@@ -63,6 +63,14 @@ RSpec.describe SleepSerializer do
 
     it 'renders the correct title' do
       expect(serialized_sleep[:title]).to eq(sleep.title)
+    end
+
+    it 'renders the correct analysis_status' do
+      expect(serialized_sleep[:analysis_status]).to eq(sleep.analysis_status)
+    end
+
+    it 'renders the correct analysis' do
+      expect(serialized_sleep[:analysis]).to eq(sleep.analysis)
     end
 
     it 'renders the correct datepicker_date' do

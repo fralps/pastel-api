@@ -6,7 +6,7 @@ module Api
     class SleepsController < ApiController
       include SearchConcern
 
-      before_action :find_sleep, only: [:show, :update, :destroy]
+      before_action :find_sleep, only: [:show, :update, :destroy, :analyse]
       before_action :format_date_params, only: [:create, :update]
 
       def index
@@ -54,6 +54,25 @@ module Api
           message: 'Sleep could not be deleted'
         }] },
                status: :unprocessable_content
+      end
+
+      def analyse
+        if @sleep.analysis_status == 'done' || @sleep.analysis_status == 'in_progress' || @sleep.analysis.present?
+          return render json: { message: 'Sleep analysis already in progress or done',
+                                code: 'analysis_already_in_progress_or_done' }, status: :ok
+        end
+
+        locale = params[:locale] || I18n.default_locale
+
+        SleepAnalyseJob.perform_later(@sleep.id, locale)
+
+        @sleep.analysis_status = :in_progress
+        if @sleep.save
+          render json: SleepSerializer.render(@sleep, view: :update_and_show)
+        else
+          render json: { message: 'Failed to start sleep analysis', code: 'analysis_start_failed' },
+                 status: :unprocessable_content
+        end
       end
 
       private

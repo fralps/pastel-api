@@ -190,4 +190,71 @@ RSpec.describe Api::V1::SleepsController, type: :request do
       end
     end
   end
+
+  describe '#POST /api/v1/sleeps/:id/analyse' do
+    let(:user) { create(:user) }
+    let(:sleep) { create(:sleep, user:) }
+
+    before do
+      post "/api/v1/sleeps/#{sleep.id}/analyse", headers: auth_headers(user)
+    end
+
+    it_behaves_like 'A success response'
+
+    it 'enqueues a SleepAnalyseJob with the sleep id' do
+      expect(SleepAnalyseJob).to have_been_enqueued.with(sleep.id, anything)
+    end
+
+    it 'enqueues a SleepAnalyseJob with the default locale when none is provided' do
+      expect(SleepAnalyseJob).to have_been_enqueued.with(sleep.id, I18n.default_locale)
+    end
+
+    it 'returns the updated sleep with analysis_status in progress' do
+      expect(json_response['analysis_status']).to eq('in_progress')
+    end
+
+    it 'returns a 404 if sleep is not found' do
+      post '/api/v1/sleeps/wrong-id/analyse', headers: auth_headers(user)
+      expect(response).to be_not_found
+    end
+
+    it 'returns a 404 if sleep belongs to another user' do
+      other_user = create(:user, :other_user)
+      other_sleep = create(:sleep, user: other_user)
+      post "/api/v1/sleeps/#{other_sleep.id}/analyse", headers: auth_headers(user)
+      expect(response).to be_not_found
+    end
+
+    context 'when analysis is already done' do
+      let(:sleep) { create(:sleep, user:, analysis_status: 'done') }
+
+      it 'returns a 200' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns the analysis_already_in_progress_or_done code' do
+        expect(json_response['code']).to eq('analysis_already_in_progress_or_done')
+      end
+
+      it 'does not enqueue a SleepAnalyseJob' do
+        expect(SleepAnalyseJob).not_to have_been_enqueued
+      end
+    end
+
+    context 'when analysis text is already present' do
+      let(:sleep) { create(:sleep, user:, analysis: 'Some previous analysis') }
+
+      it 'returns a 200' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns the analysis_already_in_progress_or_done code' do
+        expect(json_response['code']).to eq('analysis_already_in_progress_or_done')
+      end
+
+      it 'does not enqueue a SleepAnalyseJob' do
+        expect(SleepAnalyseJob).not_to have_been_enqueued
+      end
+    end
+  end
 end

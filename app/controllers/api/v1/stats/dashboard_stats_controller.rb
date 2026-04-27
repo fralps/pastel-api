@@ -23,7 +23,8 @@ module Api
               sleep_talking: current_user.talkings.size,
               sleep_apnea: current_user.apneas.size,
               erotic: current_user.erotics.size
-            }
+            },
+            ai_analyzed: current_user.sleeps.ai_analyzed.size
             # by_month: {
             #   dreams: build_months_records(current_user.dreams),
             #   lucids: build_months_records(current_user.lucids),
