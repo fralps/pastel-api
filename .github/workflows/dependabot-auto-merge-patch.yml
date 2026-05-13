@@ -1,0 +1,21 @@
+name: Auto-merge Dependabot patch PRs
+
+on:
+  schedule:
+    - cron: '0 8 * * 3'  # Every Wednesday at 8:00 UTC
+  workflow_dispatch:     # Can also be triggered manually
+
+permissions:
+  contents: write
+  pull-requests: write
+  statuses: read
+  checks: read
+
+jobs:
+  auto-merge-patches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🤖 Auto-merge Dependabot patch PRs
+        uses: fralps/github-actions/dependabot-auto-merge-patch@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
