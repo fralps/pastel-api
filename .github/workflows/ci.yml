@@ -92,11 +92,10 @@ jobs:
         with:
           bun-version: latest
 
-      - name: 🔧 Install modules
-        run: bun install
-
       - name: 🧪 Run licenses check
         uses: fralps/github-actions/check-licenses@main
+        with:
+          package-manager: bun
 
   security:
     name: 🔒 Security
