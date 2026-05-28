@@ -79,6 +79,18 @@ jobs:
           STAGING_ENV: 'false'
         run: bundle exec rspec --profile -f j -o tmp/rspec_results.json -f p
 
+  licenses:
+    name: ©️ Licenses
+    if: success()
+    needs: testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔧 Checkout code
+        uses: actions/checkout@v6
+
+      - name: 🧪 Run licenses check
+        uses: fralps/github-actions/check-licenses@main
+
   security:
     name: 🔒 Security
     if: success()
