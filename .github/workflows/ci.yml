@@ -88,6 +88,13 @@ jobs:
       - name: 🔧 Checkout code
         uses: actions/checkout@v6
 
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: 🔧 Install modules
+        run: bun install
+
       - name: 🧪 Run licenses check
         uses: fralps/github-actions/check-licenses@main
 
