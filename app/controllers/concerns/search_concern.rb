@@ -9,7 +9,7 @@ module SearchConcern
     def search_query
       return if params[:query].blank?
 
-      params[:query].downcase
+      params.expect(:query).downcase
     end
 
     # Return search results with a title query
