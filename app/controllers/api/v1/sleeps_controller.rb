@@ -78,7 +78,7 @@ module Api
       private
 
       def find_sleep
-        @sleep = current_user.sleeps.find(params[:id])
+        @sleep = current_user.sleeps.find(params.expect(:id))
       end
 
       def format_date_params
@@ -86,7 +86,9 @@ module Api
 
         timestamp = Time.zone.local(date_hash['year'], date_hash['month'], date_hash['day'])
 
+        # rubocop:disable Rails/StrongParametersExpect
         params[:sleep][:date] = timestamp
+        # rubocop:enable Rails/StrongParametersExpect
       end
 
       def sleep_params

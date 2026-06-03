@@ -39,7 +39,7 @@ module Api
         end
 
         def find_user
-          @user = User.includes(user_includes).find(params[:id])
+          @user = User.includes(user_includes).find(params.expect(:id))
         end
 
         def user_includes
