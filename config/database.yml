@@ -17,10 +17,10 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
+  host: <%= ENV.fetch('PGHOST', ENV.fetch('POSTGRES_HOST', 'localhost')) %>
   database: <%= ENV.fetch('POSTGRES_DB', 'pastel_api_dev') %>
-  username: <%= ENV['POSTGRES_USER'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  username: <%= ENV.fetch('POSTGRES_USER', 'postgres') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', '') %>
   gssencmode: disable
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
@@ -37,7 +37,7 @@ test:
   database: <%= ENV.fetch('POSTGRES_DB', 'pastel_api_test') %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
-# like your database password, in your source code. If your source code is
+# like your password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
 #
 # Instead, provide the password as a unix environment variable when you boot
