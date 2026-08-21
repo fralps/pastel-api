@@ -52,6 +52,8 @@ gem 'propshaft'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
+gem 'ruby-vips', '~> 2.0'
+
 gem 'solid_queue'
 
 group :development, :test do
