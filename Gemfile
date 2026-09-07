@@ -42,7 +42,7 @@ gem 'image_processing', '~> 2.0'
 # Handle email catching
 gem 'letter_opener_web'
 
-gem 'mission_control-jobs', '~> 1.1'
+gem 'mission_control-jobs', '~> 1.2'
 
 # Fast JSON
 gem 'oj'
