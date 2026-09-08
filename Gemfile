@@ -37,7 +37,7 @@ gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'main', req
 gem 'groupdate'
 
 # Image uploading and processing
-gem 'image_processing', '~> 2.0'
+gem 'image_processing', '~> 2.1'
 
 # Handle email catching
 gem 'letter_opener_web'
