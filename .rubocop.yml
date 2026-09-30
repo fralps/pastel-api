@@ -11,6 +11,7 @@ Rails:
 AllCops:
   Exclude:
     - 'db/schema.rb'
+    - 'db/rails_pulse_schema.rb'
     - 'config/routes.rb'
     - 'tmp/**/*'
     - 'public/**/*'

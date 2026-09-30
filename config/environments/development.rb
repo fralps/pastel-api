@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 Rails.application.configure do
   # Bullet settings
   config.after_initialize do
@@ -75,4 +75,3 @@ Rails.application.configure do
   MissionControl::Jobs.http_basic_auth_user = ENV.fetch('SOLID_QUEUE_HTTP_BASIC_AUTH_USER', nil)
   MissionControl::Jobs.http_basic_auth_password = ENV.fetch('SOLID_QUEUE_HTTP_BASIC_AUTH_PASSWORD', nil)
 end
-# rubocop:enable Metrics/BlockLength

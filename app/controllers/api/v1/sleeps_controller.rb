@@ -86,9 +86,8 @@ module Api
 
         timestamp = Time.zone.local(date_hash['year'], date_hash['month'], date_hash['day'])
 
-        # rubocop:disable Rails/StrongParametersExpect
+        # rubocop:disable-next Rails/StrongParametersExpect
         params[:sleep][:date] = timestamp
-        # rubocop:enable Rails/StrongParametersExpect
       end
 
       def sleep_params
