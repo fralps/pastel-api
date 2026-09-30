@@ -101,4 +101,24 @@ RSpec.describe SleepAnalysisService do
       end
     end
   end
+
+  describe '#parse_response' do
+    let(:raw_response) do
+      {
+        choices: [
+          {
+            message: {
+              content: 'This dream suggests a desire for freedom.'
+            }
+          }
+        ]
+      }.to_json
+    end
+
+    it 'returns the text content from a Mistral response' do
+      result = service.send(:parse_response, raw_response)
+
+      expect(result).to eq('This dream suggests a desire for freedom.')
+    end
+  end
 end

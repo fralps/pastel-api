@@ -23,6 +23,9 @@ class SleepAnalysisService < ApplicationService
   def call
     response = send_request_to_mistral
     result = parse_response(response) if response.present?
+
+    Rails.logger.error 'Unexpected or empty analysis in Mistral API response' if result.blank?
+
     update_sleep_with_analysis(result) if result.present?
   end
 
@@ -61,7 +64,7 @@ class SleepAnalysisService < ApplicationService
   # Returns nil if the response is blank.
   def parse_response(raw_response)
     response = JSON.parse(raw_response)
-    return response['choices'].first['message']['content'][1]['text'] if response.present?
+    return response['choices'].first['message']['content'] if response.present?
 
     nil
   end
@@ -71,7 +74,7 @@ class SleepAnalysisService < ApplicationService
   # and a user message containing the sleep attributes (title, type, description, tags, mood, intensity, when).
   def build_payload
     {
-      model: 'magistral-small-2509',
+      model: 'ministral-3b-2512',
       response_format: {
         type: 'text'
       },
