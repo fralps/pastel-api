@@ -61,7 +61,7 @@ gem 'solid_queue'
 group :development, :test do
   gem 'bundler-audit'
   gem 'rspec-json_expectations'
-  gem 'rspec-rails', '~> 8.0.4'
+  gem 'rspec-rails', '~> 8.1.0'
   gem 'rubocop', require: false
   gem 'rubocop-checkstyle_formatter', require: false
   gem 'rubocop-factory_bot', require: false
